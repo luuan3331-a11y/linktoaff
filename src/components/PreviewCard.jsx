@@ -16,7 +16,11 @@ export default function PreviewCard({ link, onTrackClick }) {
     
     // Redirect CURRENT tab to Affiliate Link immediately
     // Use replace to prevent "Back" button loop if possible, or href is fine.
-    window.location.href = affiliate_url
+    // We ADD A DELAY to ensure the browser has time to process the "Open in new tab" (target="_blank") event first.
+    // Without delay, the immediate redirect might cancel the new tab opening in some browsers.
+    setTimeout(() => {
+        window.location.href = affiliate_url
+    }, 150)
   }
 
   return (
