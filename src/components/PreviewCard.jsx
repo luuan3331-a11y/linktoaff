@@ -7,34 +7,23 @@ export default function PreviewCard({ link, onTrackClick }) {
   // We use h-[100dvh] to ensure it fits mobile viewports with address bars
   
   const handleClick = (e) => {
-    e.preventDefault() // Prevent default if it was an <a> tag, though we'll switch to <button> or <div>
-
-    // 1. Notify parent to track click
+    // 1. Notify parent to track click (count update)
     if (onTrackClick) onTrackClick()
     
-    // 2. Open Affiliate Link in New Tab
-    const newWindow = window.open(affiliate_url, '_blank')
+    // 2. Logic:
+    // - New Tab (href): Opens Target URL (Link Gốc)
+    // - Current Tab (onClick): Redirects to Affiliate URL (Link Aff)
     
-    // Attempt to keep focus on the CURRENT window (Best effort, browsers often block this)
-    if (newWindow) {
-        // Tactic: Blur the new window immediately
-        try { newWindow.blur() } catch(e) {}
-        try { window.focus() } catch(e) {}
-    }
-
-    // 3. Redirect current tab to target_url IMMEDIATELY
-    // We remove the delay to ensure the current tab remains active/loading the target immediately
-    // usage of window.location.replace might be better to avoid history buildup of the preview page
-    if (link.target_url) {
-        window.location.href = link.target_url
-    }
+    // Redirect CURRENT tab to Affiliate Link immediately
+    // Use replace to prevent "Back" button loop if possible, or href is fine.
+    window.location.href = affiliate_url
   }
 
   return (
     <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 bg-[#f5f5f7]">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
         
-        {/* Image Section - Flex shrink allowed, max height limited */}
+        {/* Image Section */}
         {image_url && (
             <div className="relative w-full shrink-0 max-h-[35vh] overflow-hidden bg-gray-100">
                 <img 
@@ -46,7 +35,7 @@ export default function PreviewCard({ link, onTrackClick }) {
             </div>
         )}
 
-        {/* Content Section - Flex grow to fill available space handled by padding/margins */}
+        {/* Content Section */}
         <div className="flex flex-col p-6 flex-1 overflow-y-auto">
             <h1 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2 shrink-0">
                 {title}
@@ -58,18 +47,17 @@ export default function PreviewCard({ link, onTrackClick }) {
                 </p>
             )}
 
-            {/* Spacer to push button to bottom if needed, or just margin */}
+            {/* Spacer */}
             <div className="mt-auto pt-4 pb-2">
-                <button 
+                <a 
+                    href={link.target_url} 
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
                     onClick={handleClick}
-                    className="group relative w-full py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-center text-xl font-bold rounded-xl transition-all shadow-lg shadow-orange-200 hover:shadow-orange-300 transform hover:-translate-y-1 active:scale-95 animate-pulse-slow"
+                    className="btn btn-primary btn-super-cta w-full py-4 rounded-xl animate-pulse-slow"
                 >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                        👉 XEM NGAY
-                    </span>
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </button>
+                    👉 XEM NGAY
+                </a>
                 <p className="text-center text-xs text-gray-400 mt-3 animate-fade-in">
                     Bạn sẽ được chuyển hướng trong giây lát...
                 </p>

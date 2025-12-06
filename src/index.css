@@ -129,6 +129,53 @@ button {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
+
 .animate-pulse-slow {
   animation: pulseSlow 3s infinite;
+}
+
+/* Super CTA Button Style (No Tailwind) */
+.btn-super-cta {
+  background: linear-gradient(90deg, #ff6b35 0%, #ff3b30 100%);
+  color: white;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: 0 10px 15px -3px rgba(255, 107, 53, 0.4);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none; /* Ensure <a> has no underline */
+}
+
+.btn-super-cta:hover {
+  background: linear-gradient(90deg, #e05a2b 0%, #d42a20 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 20px -3px rgba(255, 107, 53, 0.5);
+}
+
+.btn-super-cta:active {
+  transform: scale(0.98);
+}
+
+/* Shine effect */
+.btn-super-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-25deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
 }
