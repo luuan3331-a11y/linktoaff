@@ -24,12 +24,12 @@ export default function PreviewCard({ link, onTrackClick }) {
   }
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 bg-[#f5f5f7]">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="h-[100dvh] w-full flex flex-col items-center justify-center p-2 bg-[#f5f5f7] overflow-hidden">
+      <div className="w-full max-w-sm bg-white rounded-xl shadow-xl overflow-hidden flex flex-col max-h-[95vh] h-full md:h-auto">
         
         {/* Image Section */}
         {image_url && (
-            <div className="relative w-full shrink-0 max-h-[25vh] md:max-h-[35vh] overflow-hidden bg-gray-100 flex items-center justify-center">
+            <div className="relative w-full shrink-0 max-h-[20vh] md:max-h-[30vh] overflow-hidden bg-gray-100 flex items-center justify-center">
                 <img 
                     src={image_url} 
                     alt={title} 
@@ -40,13 +40,13 @@ export default function PreviewCard({ link, onTrackClick }) {
         )}
 
         {/* Content Section */}
-        <div className="flex flex-col p-6 flex-1 overflow-y-auto">
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2 shrink-0">
+        <div className="flex flex-col p-4 flex-1 overflow-hidden">
+            <h1 className="text-lg md:text-xl font-bold text-gray-900 leading-tight mb-2 shrink-0 line-clamp-2">
                 {title}
             </h1>
             
             {description && (
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 overflow-y-auto line-clamp-4 md:line-clamp-6">
+                <p className="text-sm text-gray-600 leading-relaxed mb-4 overflow-y-auto line-clamp-3 md:line-clamp-5">
                     {description}
                 </p>
             )}
