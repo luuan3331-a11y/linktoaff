@@ -106,9 +106,29 @@ button {
   box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
+
 .label {
   display: block;
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--text-main);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(255, 107, 53, 0.3); }
+  50% { transform: scale(1.02); box-shadow: 0 15px 25px -5px rgba(255, 107, 53, 0.5); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s infinite;
 }

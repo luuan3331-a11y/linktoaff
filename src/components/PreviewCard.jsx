@@ -7,19 +7,27 @@ export default function PreviewCard({ link, onTrackClick }) {
   // We use h-[100dvh] to ensure it fits mobile viewports with address bars
   
   const handleClick = (e) => {
+    e.preventDefault() // Prevent default if it was an <a> tag, though we'll switch to <button> or <div>
+
     // 1. Notify parent to track click
     if (onTrackClick) onTrackClick()
     
-    // 2. Affiliate link opens in new tab via native <a> behavior (target="_blank")
-    // This is the most reliable way to avoid popup blockers.
+    // 2. Open Affiliate Link in New Tab
+    const newWindow = window.open(affiliate_url, '_blank')
     
-    // 3. Redirect current tab to target_url
-    // We delay slightly to allow the new tab event to process
-    setTimeout(() => {
-        if (link.target_url) {
-            window.location.href = link.target_url
-        }
-    }, 500)
+    // Attempt to keep focus on the CURRENT window (Best effort, browsers often block this)
+    if (newWindow) {
+        // Tactic: Blur the new window immediately
+        try { newWindow.blur() } catch(e) {}
+        try { window.focus() } catch(e) {}
+    }
+
+    // 3. Redirect current tab to target_url IMMEDIATELY
+    // We remove the delay to ensure the current tab remains active/loading the target immediately
+    // usage of window.location.replace might be better to avoid history buildup of the preview page
+    if (link.target_url) {
+        window.location.href = link.target_url
+    }
   }
 
   return (
@@ -51,17 +59,18 @@ export default function PreviewCard({ link, onTrackClick }) {
             )}
 
             {/* Spacer to push button to bottom if needed, or just margin */}
-            <div className="mt-auto pt-4">
-                <a 
-                    href={affiliate_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+            <div className="mt-auto pt-4 pb-2">
+                <button 
                     onClick={handleClick}
-                    className="block w-full py-4 bg-blue-600 hover:bg-blue-700 text-white text-center text-lg font-bold rounded-xl transition-transform active:scale-95 shadow-lg shadow-blue-200 no-underline"
+                    className="group relative w-full py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white text-center text-xl font-bold rounded-xl transition-all shadow-lg shadow-orange-200 hover:shadow-orange-300 transform hover:-translate-y-1 active:scale-95 animate-pulse-slow"
                 >
-                    👉 Xem ngay
-                </a>
-                <p className="text-center text-xs text-gray-400 mt-3">
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                        👉 XEM NGAY
+                    </span>
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                </button>
+                <p className="text-center text-xs text-gray-400 mt-3 animate-fade-in">
                     Bạn sẽ được chuyển hướng trong giây lát...
                 </p>
             </div>
