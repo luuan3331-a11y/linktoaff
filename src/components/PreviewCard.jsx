@@ -27,20 +27,20 @@ export default function PreviewCard({ link, onTrackClick }) {
     <div className="h-[100dvh] w-full flex flex-col items-center justify-center p-2 bg-[#f5f5f7] overflow-hidden">
       <div className="w-full max-w-sm bg-white rounded-xl shadow-xl overflow-hidden flex flex-col max-h-[95vh] h-full md:h-auto">
         
-        {/* Image Section */}
+        {/* Image Section - Allow shrinking if space is low */}
         {image_url && (
-            <div className="relative w-full shrink-0 max-h-[20vh] md:max-h-[30vh] overflow-hidden bg-gray-100 flex items-center justify-center">
+            <div className="relative w-full shrink min-h-0 basis-auto overflow-hidden flex items-center justify-center p-2">
                 <img 
                     src={image_url} 
                     alt={title} 
-                    className="w-full h-full object-contain md:object-cover bg-white"
+                    className="w-full h-full max-h-[30vh] object-contain rounded-lg"
                     onError={(e) => { e.target.style.display = 'none' }}
                 />
             </div>
         )}
 
-        {/* Content Section */}
-        <div className="flex flex-col p-4 flex-1 overflow-hidden">
+        {/* Content Section - Prevent shrinking so text/button stay visible */}
+        <div className="flex flex-col p-4 shrink-0 z-10 bg-white shadow-[0_-10px_20px_-5px_rgba(255,255,255,1)]">
             <h1 className="text-lg md:text-xl font-bold text-gray-900 leading-tight mb-2 shrink-0 line-clamp-2">
                 {title}
             </h1>
