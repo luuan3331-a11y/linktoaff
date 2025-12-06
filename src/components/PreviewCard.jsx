@@ -29,11 +29,11 @@ export default function PreviewCard({ link, onTrackClick }) {
         
         {/* Image Section */}
         {image_url && (
-            <div className="relative w-full shrink-0 max-h-[35vh] overflow-hidden bg-gray-100">
+            <div className="relative w-full shrink-0 max-h-[25vh] md:max-h-[35vh] overflow-hidden bg-gray-100 flex items-center justify-center">
                 <img 
                     src={image_url} 
                     alt={title} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain md:object-cover bg-white"
                     onError={(e) => { e.target.style.display = 'none' }}
                 />
             </div>
@@ -46,7 +46,7 @@ export default function PreviewCard({ link, onTrackClick }) {
             </h1>
             
             {description && (
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 overflow-y-auto line-clamp-6">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 overflow-y-auto line-clamp-4 md:line-clamp-6">
                     {description}
                 </p>
             )}
